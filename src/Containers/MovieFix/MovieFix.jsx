@@ -7,7 +7,7 @@ const API_KEY = "2dca580c2a14b55200e784d157207b4d";
 
 const options = {
   root: document.getElementsByClassName("moviefix-section")[0],
-  rootMargin: "40px 0px 0px 0px",
+  rootMargin: "300px 0px 0px 0px",
   threshold: 1,
 };
 
@@ -102,6 +102,13 @@ function MovieFix() {
       vote_count: 100,
       genres: [],
     });
+
+    setTimeout(() => {
+      let target = document.querySelector("#load-previous");
+
+      target.scrollIntoView();
+    }, 1000);
+
     fetchGenre();
   }, []);
 
