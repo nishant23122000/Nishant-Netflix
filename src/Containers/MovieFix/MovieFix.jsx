@@ -27,48 +27,44 @@ function MovieFix() {
   const [isLoadingNext, setLoadingNext] = useState(false);
   const [genreMap, setGenreMap] = useState(new Map());
 
-  const fetchMovies = async ({
-    sort_by,
-    release_year,
-    page,
-    vote_count,
-    genres,
-    prev,
-  }) => {
-    try {
-      if (prev) setLoadingPrevious(true);
-      else setLoadingNext(true);
+  const fetchMovies = useCallback(
+    async ({ sort_by, release_year, page, vote_count, genres, prev }) => {
+      try {
+        if (prev) setLoadingPrevious(true);
+        else setLoadingNext(true);
 
-      const res = await fetch(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=${sort_by}&primary_release_year=${release_year}&page=${page}&vote_count.gte=${vote_count}&with_genres=${genres}`
-      );
-      const resMovies = await res.json();
+        const res = await fetch(
+          `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=${sort_by}&primary_release_year=${release_year}&page=${page}&vote_count.gte=${vote_count}&with_genres=${genres}`
+        );
+        const resMovies = await res.json();
 
-      setMovies((prevMovies) => {
-        const newMap = new Map(prevMovies);
+        setMovies((prevMovies) => {
+          const newMap = new Map(prevMovies);
 
-        if (prev) {
-          const mapForPrev = new Map();
-          if (!prevMovies.get(release_year))
-            mapForPrev.set(release_year, resMovies.results);
-          prevMovies.forEach((value, key) => {
-            mapForPrev.set(key, value);
-          });
+          if (prev) {
+            const mapForPrev = new Map();
+            if (!prevMovies.get(release_year))
+              mapForPrev.set(release_year, resMovies.results);
+            prevMovies.forEach((value, key) => {
+              mapForPrev.set(key, value);
+            });
 
-          return mapForPrev;
-        } else {
-          if (!newMap.get(release_year))
-            newMap.set(release_year, resMovies.results);
+            return mapForPrev;
+          } else {
+            if (!newMap.get(release_year))
+              newMap.set(release_year, resMovies.results);
 
-          return newMap;
-        }
-      });
-      if (prev) setLoadingPrevious(false);
-      else setLoadingNext(false);
-    } catch (error) {}
-  };
+            return newMap;
+          }
+        });
+        if (prev) setLoadingPrevious(false);
+        else setLoadingNext(false);
+      } catch (error) {}
+    },
+    [setLoadingPrevious, setLoadingNext, setMovies]
+  );
 
-  const fetchGenre = async () => {
+  const fetchGenre = useCallback(async () => {
     try {
       const res = await fetch(
         `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
@@ -91,8 +87,7 @@ function MovieFix() {
     } catch (error) {
       window.alert("API error, please use VPN");
     }
-  };
-
+  }, [setGenres, setGenreMap]);
   // Intial 2012 movies as describe in assignment
   useEffect(() => {
     fetchMovies({
@@ -189,21 +184,23 @@ function MovieFix() {
 
     const newGenres = [...genres];
 
-    const selectedGeneres = newGenres
+    const selectedGenres = newGenres
       .filter((genre) => genre.selected == true)
       .map((genre) => genre.id);
 
-    setSelectedgenres(selectedGeneres.toString());
+    setSelectedgenres(selectedGenres.toString());
 
     // Clear the old state as genre filter changed
     setMovies(new Map());
+    setPrevLoadedYear(2012);
+    setNextLoadedYear(2012);
 
     fetchMovies({
       sort_by: "popularity.desc",
       release_year: 2012,
       page: 1,
       vote_count: 100,
-      genres: selectedGeneres.toString(),
+      genres: selectedGenres.toString(),
     });
     setGenres(newGenres);
   };
