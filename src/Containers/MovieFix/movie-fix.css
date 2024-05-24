@@ -1,0 +1,47 @@
+.moviefix-section .year {
+  margin: auto 10px;
+  margin-top: 1rem;
+  font-size: 2rem;
+  text-align: start;
+  color: white;
+  font-weight: bold;
+}
+
+.movies-section {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-auto-flow: row;
+}
+
+@media screen and (min-width: 480px) {
+  .movies-section {
+    grid-template-columns: repeat(2, 50%);
+  }
+}
+
+.genres-section {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.genre {
+  margin: 5px 5px;
+  border-radius: 1rem;
+
+  text-align: center;
+  height: 100%;
+  padding: 5px 15px;
+  color: white;
+  font-size: 1rem;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
+  cursor: pointer;
+}
+
+.hr {
+  height: 2px;
+  width: 95%;
+  background-color: gray;
+  margin: 0 auto;
+}
+
