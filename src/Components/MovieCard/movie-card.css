@@ -1,0 +1,62 @@
+.movie-card {
+  height: 400px;
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: 100% 100%;
+  margin: 10px;
+  display: flex;
+  align-items: end;
+  color: white;
+  background: linear-gradient(to right, #283048, #859398);
+  backdrop-filter: brightness(120%);
+  box-shadow: rgba(0, 0, 0, 0.16) 1px 1px 4px 0px;
+}
+
+.movie-card-inner {
+  width: 100%;
+  padding: 5px 10px;
+}
+
+.overview-section {
+  height: 70px;
+  padding-bottom: 1rem;
+}
+
+.movie-card .overview {
+  display: -webkit-box;
+
+  width: 100%;
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  font-size: 0.8rem;
+}
+
+.movie-card .title {
+  text-align: start;
+  margin-bottom: 0.5rem;
+}
+
+.movie-card .title {
+  font-size: 1.5rem;
+}
+
+.backdrop {
+  position: absolute;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(0deg, #000 44.55%, #83b9de00 99.81%);
+  background-blend-mode: multiply;
+  z-index: -2;
+}
+
+.genres-section {
+  padding: 5px 0;
+}
+
+.genres {
+  font-size: 0.8rem;
+  text-align: start;
+}
